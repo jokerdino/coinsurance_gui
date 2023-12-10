@@ -5,6 +5,8 @@ import pandas as pd
 
 from company_wise_reports import merge_files
 from pivot_table import generate_pivot_table
+from split_follower_office_code import split_files
+from merge_coinsurance_files import merge_multiple_files
 
 df_premium_file = pd.DataFrame()
 df_claim_file = pd.DataFrame()
@@ -17,7 +19,7 @@ class MyGUI:
         self.root = tk.Tk()
 
         self.root.title("Coinsurance GUI")
-        self.root.geometry("575x500")
+        self.root.geometry("575x600")
 
         self.premium_button = tk.Button(
             self.root,
@@ -25,7 +27,6 @@ class MyGUI:
             font=("Arial", 18),
             command=open_premium_file,
         )
-        #       self.premium_button.pack(padx=20, pady=10)
 
         self.claim_button = tk.Button(
             self.root,
@@ -34,7 +35,6 @@ class MyGUI:
             command=open_claim_file,
         )
 
-        #      self.claim_button.pack(padx=20, pady=10)
         self.claim_data_button = tk.Button(
             self.root,
             text="Claims data",
@@ -45,9 +45,7 @@ class MyGUI:
         self.premium_button.grid(row=10, column=0, pady=20)
         self.claim_button.grid(row=10, column=1, pady=20)
         self.claim_data_button.grid(row=10, column=2, pady=20)
-        #  self.premium_button.pack(padx=20,pady=10)
 
-#        self.check_bool_hub = tk.BooleanVar()
         global bool_hub
         bool_hub = tk.BooleanVar()
         self.check_Button = tk.Checkbutton(
@@ -58,7 +56,6 @@ class MyGUI:
             height=5,
             width=20,
             text="Only OO entries",
-           # command=check_button_clicked,
         )
         self.check_Button.grid(row=15, column=1, pady=20)
 
@@ -68,7 +65,6 @@ class MyGUI:
             font=("Arial", 18),
             command=generate_reports,
         )
-        #        self.generate_reports_button.pack(padx=20, pady=10)
 
         self.new_summary_company_report_button = tk.Button(
             self.root,
@@ -78,8 +74,26 @@ class MyGUI:
         )
         self.generate_reports_button.grid(row=20, column=1, pady=50)
 
-        self.new_summary_company_report_button.grid(row=40, column=1, pady=50)
-        #       self.new_summary_company_report_button.pack(padx=20, pady=10)
+
+        self.split_follower_office_code_button = tk.Button(
+            self.root,
+            text="Split follower office code",
+            font=("Arial", 12),
+            command=split_follower_office_code,
+        )
+
+
+
+        self.merge_files = tk.Button(
+            self.root,
+            text="Merge files",
+            font=("Arial", 12),
+            command=merge_multiple_files,
+        )
+
+        self.new_summary_company_report_button.grid(row=35, column=0, pady=50)
+        self.split_follower_office_code_button.grid(row=35, column=1, pady=50)
+        self.merge_files.grid(row=35, column=2, pady=50)
         self.root.mainloop()
 
 
@@ -148,5 +162,34 @@ def generate_summary():
         title="Message", message=(f"Summary has been generated for {company_name}.")
     )
 
+def split_follower_office_code():
+    current_company_file = tk.filedialog.askopenfilename(
+        filetypes=[("Excel file", "*.xlsx")]
+    )
+    company_name = current_company_file.split(".", 1)[0]
 
-MyGUI()
+    follower_office_code = tk.simpledialog.askstring(
+        title="Enter follower office code", prompt="Enter follower office code"
+    )
+
+    split_files(current_company_file, follower_office_code)
+
+    tk.messagebox.showinfo(
+        title="Message", message=(f"Statement has been split for {company_name}: {follower_office_code}.")
+    )
+
+def merge_multiple_files():
+
+    multiple_files = tk.filedialog.askopenfilenames(
+        filetypes=[("Excel files", "*.xlsx")]
+    )
+    new_file_name = tk.simpledialog.askstring(
+        title="Enter new file name", prompt="Enter new file name"
+    )
+    merge_multiple_files(multiple_files, new_file_name)
+    tk.messagebox.showinfo(
+        title="Message", message=(f"{new_file_name}.xlsx has been created.")
+    )
+
+if __name__ == "__main__":
+    MyGUI()

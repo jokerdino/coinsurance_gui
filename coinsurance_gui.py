@@ -84,16 +84,16 @@ class MyGUI:
 
 
 
-        self.merge_files = tk.Button(
+        self.merge_files_button = tk.Button(
             self.root,
             text="Merge files",
             font=("Arial", 12),
-            command=merge_multiple_files,
+            command=merge_multiple_files_button,
         )
 
         self.new_summary_company_report_button.grid(row=35, column=0, pady=50)
         self.split_follower_office_code_button.grid(row=35, column=1, pady=50)
-        self.merge_files.grid(row=35, column=2, pady=50)
+        self.merge_files_button.grid(row=35, column=2, pady=50)
         self.root.mainloop()
 
 
@@ -178,7 +178,7 @@ def split_follower_office_code():
         title="Message", message=(f"Statement has been split for {company_name}: {follower_office_code}.")
     )
 
-def merge_multiple_files():
+def merge_multiple_files_button():
 
     multiple_files = tk.filedialog.askopenfilenames(
         filetypes=[("Excel files", "*.xlsx")]
@@ -186,7 +186,9 @@ def merge_multiple_files():
     new_file_name = tk.simpledialog.askstring(
         title="Enter new file name", prompt="Enter new file name"
     )
-    merge_multiple_files(multiple_files, new_file_name)
+
+    merge_multiple_files(multiple_files, new_file_name.split(".", 1)[0])
+
     tk.messagebox.showinfo(
         title="Message", message=(f"{new_file_name}.xlsx has been created.")
     )

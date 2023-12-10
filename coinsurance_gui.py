@@ -21,6 +21,14 @@ class MyGUI:
         self.root.title("Coinsurance GUI")
         self.root.geometry("575x600")
 
+        # menu bar
+        self.menubar = tk.Menu(self.root)
+        self.root.configure(menu=self.menubar)
+        self.filemenu = tk.Menu(self.menubar, tearoff=0)
+        self.menubar.add_cascade(label="File", menu=self.filemenu)
+        self.filemenu.add_command(label="About", command=show_version)
+        self.filemenu.add_command(label="Quit", command=self.root.destroy)
+
         self.premium_button = tk.Button(
             self.root,
             text="Premium payable",
@@ -95,6 +103,11 @@ class MyGUI:
         self.split_follower_office_code_button.grid(row=35, column=1, pady=50)
         self.merge_files_button.grid(row=35, column=2, pady=50)
         self.root.mainloop()
+
+def show_version():
+    tk.messagebox.showinfo(
+            title="Version", message=(f"Current version: 0.2")
+    )
 
 
 def open_premium_file():

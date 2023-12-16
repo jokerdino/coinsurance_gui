@@ -8,6 +8,8 @@ from pivot_table import generate_pivot_table
 from split_follower_office_code import split_files
 from merge_coinsurance_files import merge_multiple_files
 
+from premium_receivable_script import premium_receivable_function
+
 df_premium_file = pd.DataFrame()
 df_claim_file = pd.DataFrame()
 df_claim_data_file = pd.DataFrame()
@@ -90,8 +92,6 @@ class MyGUI:
             command=split_follower_office_code,
         )
 
-
-
         self.merge_files_button = tk.Button(
             self.root,
             text="Merge files",
@@ -102,6 +102,14 @@ class MyGUI:
         self.new_summary_company_report_button.grid(row=35, column=0, pady=50)
         self.split_follower_office_code_button.grid(row=35, column=1, pady=50)
         self.merge_files_button.grid(row=35, column=2, pady=50)
+
+        self.premium_receivable = tk.Button(
+            self.root,
+            text="Premium receivable", 
+            font=("Arial", 12),
+            command=premium_receivable_button,
+        )
+        self.premium_receivable.grid(row=45, column=1, pady=50)
         self.root.mainloop()
 
 def show_version():
@@ -204,6 +212,18 @@ def merge_multiple_files_button():
 
     tk.messagebox.showinfo(
         title="Message", message=(f"{new_file_name}.xlsx has been created.")
+    )
+
+def premium_receivable_button():
+    premium_receivable_csv = tk.filedialog.askopenfilename(
+        filetypes=[("CSV files", "*.csv")]
+    )
+    folder_name = tk.simpledialog.askstring(
+        title="Enter folder name for Premium receivable", prompt="Enter folder name for premium receivable")
+    df_premium_receivable = pd.read_csv(premium_receivable_csv)
+    premium_receivable_function(df_premium_receivable, folder_name)
+    tk.messagebox.showinfo(
+        title="Message", message=(f"Premium receivable has been generated in {folder_name}_PR folder.")
     )
 
 if __name__ == "__main__":

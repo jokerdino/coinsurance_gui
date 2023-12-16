@@ -16,7 +16,8 @@ def worksheet_formatter(writer, sheet_name):
 
     if sheet_name == "PP":
         format_worksheet.set_column("P:U", 11, format_currency)
-
+    elif sheet_name == "PR":
+        format_worksheet.set_column("Q:V", 11, format_currency)
     elif sheet_name == "CR":
         format_worksheet.set_column("N:N", 11, format_currency)
 

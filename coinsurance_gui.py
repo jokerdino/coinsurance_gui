@@ -131,16 +131,23 @@ def open_premium_file():
 
 
 def open_claim_file():
-    claim_file = tk.filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
+
+    claim_files = tk.filedialog.askopenfilenames(filetypes=[("CSV files", "*.csv")])
 
     global df_claim_file
-    df_claim_file = pd.read_csv(
-        claim_file,
-        converters={"TXT_LEADER_OFFICE_CODE": str, "TXT_FOLLOWER_OFFICE_CODE": str},
-    )
+    list_claim_receivable_files = []
+
+    for file in claim_files:
+
+        df_claim_file_individual = pd.read_csv(
+            file,
+            converters={"TXT_LEADER_OFFICE_CODE": str, "TXT_FOLLOWER_OFFICE_CODE": str},
+        )
+        list_claim_receivable_files.append(df_claim_file_individual)
+    df_claim_file = pd.concat(list_claim_receivable_files)
 
     tk.messagebox.showinfo(
-        title="Message", message=(f"Claim file {claim_file} has been selected.")
+        title="Message", message=(f"Claim file {df_claim_file} has been selected.")
     )
 
 

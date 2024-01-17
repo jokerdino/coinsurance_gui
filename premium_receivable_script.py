@@ -41,7 +41,7 @@ def premium_receivable_function(df_premium_receivable, folder_name):
     df_premium_receivable['GST on Admin charges'] = df_premium_receivable['Admin charges'] * 18/ 100
     df_premium_receivable['Net Premium receivable'] = df_premium_receivable['Premium'] - df_premium_receivable['Brokerage amount'] - df_premium_receivable['TPA Service charges'] - df_premium_receivable['Admin charges'] - df_premium_receivable['GST on Admin charges']
 
-
+    df_premium_receivable = df_premium_receivable[df_premium_receivable['Policy start date'] > '2023-03-31']
     #df_premium_receivable.to_excel("Merged.xlsx", index=False)
 
     unique_coinsurer_name = df_premium_receivable['Name of coinsurer'].unique()

@@ -114,7 +114,7 @@ class MyGUI:
 
 def show_version():
     tk.messagebox.showinfo(
-            title="Version", message=(f"Current version: 0.2")
+            title="Version", message=(f"Current version: 0.3")
     )
 
 

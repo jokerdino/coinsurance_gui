@@ -105,7 +105,7 @@ class MyGUI:
 
         self.premium_receivable = tk.Button(
             self.root,
-            text="Premium receivable", 
+            text="Premium receivable",
             font=("Arial", 12),
             command=premium_receivable_button,
         )
@@ -114,7 +114,7 @@ class MyGUI:
 
 def show_version():
     tk.messagebox.showinfo(
-            title="Version", message=(f"Current version: 0.3")
+            title="Version", message=(f"Current version: 0.3.1")
     )
 
 

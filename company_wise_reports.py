@@ -20,7 +20,7 @@ def worksheet_formatter(writer, sheet_name):
         format_worksheet.set_column("Q:V", 11, format_currency)
     elif sheet_name == "CR":
         format_worksheet.set_column("N:N", 11, format_currency)
-
+    format_worksheet.autofit()
 
 def merge_files(df_pp, df_claims_reports, df_claims_data, path_string_wip, bool_hub):
 

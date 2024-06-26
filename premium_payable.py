@@ -1,13 +1,14 @@
 import pandas as pd
 
+
 def generate_premium_payable(df_pp_input, bool_hub):
     df_pp_input["DAT_POLICY_START_DATE"] = pd.to_datetime(
         df_pp_input["DAT_POLICY_START_DATE"], format="mixed"
     )
     if bool_hub:
-        df_pp = df_pp_input[df_pp_input['DAT_POLICY_START_DATE'] < '2023-04-01'].copy()
+        df_pp = df_pp_input[df_pp_input["DAT_POLICY_START_DATE"] < "2023-04-01"].copy()
     else:
-        df_pp = df_pp_input[df_pp_input['DAT_POLICY_START_DATE'] > '2023-03-31'].copy()
+        df_pp = df_pp_input[df_pp_input["DAT_POLICY_START_DATE"] > "2023-03-31"].copy()
 
     df_pp["GST on admin charges"] = df_pp["CUR_ADMIN_CHARGE"] * 18 / 100
     df_pp["NUM_VOUCHER_NO"] = "'" + df_pp["NUM_VOUCHER_NO"].astype(str)
@@ -21,7 +22,7 @@ def generate_premium_payable(df_pp_input, bool_hub):
     )
     df_pp["COMPANYNAME"] = df_pp["COMPANYNAME"].astype("category")
 
-    df_pp["COMPANYNAME"] = df_pp["COMPANYNAME"].str.replace(".","")
+    df_pp["COMPANYNAME"] = df_pp["COMPANYNAME"].str.replace(".", "")
     df_pp["COMPANYNAME"] = df_pp["COMPANYNAME"].str.rstrip()
 
     df_pp["Net Premium payable"] = (
@@ -32,9 +33,10 @@ def generate_premium_payable(df_pp_input, bool_hub):
         - df_pp["GST on admin charges"]
     )
 
-    df_pp['Origin Office'] = df_pp['TXT_POLICY_NO_CHAR'].str[:6]
+    df_pp["Origin Office"] = df_pp["TXT_POLICY_NO_CHAR"].str[:6]
     df_pp = df_pp[
-        [   'Origin Office',
+        [
+            "Origin Office",
             "TXT_UIIC_OFFICE_CD",
             "COMPANYNAME",
             "TXT_FOLLOWER_OFF_CD",

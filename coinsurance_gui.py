@@ -84,7 +84,6 @@ class MyGUI:
         )
         self.generate_reports_button.grid(row=20, column=1, pady=50)
 
-
         self.split_follower_office_code_button = tk.Button(
             self.root,
             text="Split follower office code",
@@ -112,10 +111,9 @@ class MyGUI:
         self.premium_receivable.grid(row=45, column=1, pady=50)
         self.root.mainloop()
 
+
 def show_version():
-    tk.messagebox.showinfo(
-            title="Version", message=(f"Current version: 0.3.1")
-    )
+    tk.messagebox.showinfo(title="Version", message=(f"Current version: 0.3.2"))
 
 
 def open_premium_file():
@@ -168,13 +166,18 @@ def open_multiple_claim_data_files():
         message=(f"Claim data files {claim_data_files} has been selected."),
     )
 
+
 def generate_reports():
     path_string_wip = tk.simpledialog.askstring(
         title="Enter folder name", prompt="Enter folder name"
     )
 
     merge_files(
-        df_premium_file, df_claim_file, df_claim_data_file, path_string_wip, bool_hub.get()
+        df_premium_file,
+        df_claim_file,
+        df_claim_data_file,
+        path_string_wip,
+        bool_hub.get(),
     )
     tk.messagebox.showinfo(title="Message", message="Reports have been generated.")
 
@@ -190,6 +193,7 @@ def generate_summary():
         title="Message", message=(f"Summary has been generated for {company_name}.")
     )
 
+
 def split_follower_office_code():
     current_company_file = tk.filedialog.askopenfilename(
         filetypes=[("Excel file", "*.xlsx")]
@@ -203,8 +207,12 @@ def split_follower_office_code():
     split_files(current_company_file, follower_office_code)
 
     tk.messagebox.showinfo(
-        title="Message", message=(f"Statement has been split for {company_name}: {follower_office_code}.")
+        title="Message",
+        message=(
+            f"Statement has been split for {company_name}: {follower_office_code}."
+        ),
     )
+
 
 def merge_multiple_files_button():
 
@@ -221,17 +229,22 @@ def merge_multiple_files_button():
         title="Message", message=(f"{new_file_name}.xlsx has been created.")
     )
 
+
 def premium_receivable_button():
     premium_receivable_csv = tk.filedialog.askopenfilename(
         filetypes=[("CSV files", "*.csv")]
     )
     folder_name = tk.simpledialog.askstring(
-        title="Enter folder name for Premium receivable", prompt="Enter folder name for premium receivable")
+        title="Enter folder name for Premium receivable",
+        prompt="Enter folder name for premium receivable",
+    )
     df_premium_receivable = pd.read_csv(premium_receivable_csv)
     premium_receivable_function(df_premium_receivable, folder_name)
     tk.messagebox.showinfo(
-        title="Message", message=(f"Premium receivable has been generated in {folder_name}_PR folder.")
+        title="Message",
+        message=(f"Premium receivable has been generated in {folder_name}_PR folder."),
     )
+
 
 if __name__ == "__main__":
     MyGUI()

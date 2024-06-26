@@ -192,3 +192,4 @@ def generate_pivot_table(excel_filename, company_name, path_string_wip):
         format_worksheet.set_column("C:D", 12, format_currency)
         format_worksheet.set_row(-1, 12, format_bold)
         format_worksheet.set_row(0, None, format_header)
+        format_worksheet.autofit()

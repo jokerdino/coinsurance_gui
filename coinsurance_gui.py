@@ -145,7 +145,7 @@ def open_claim_file():
     df_claim_file = pd.concat(list_claim_receivable_files)
 
     tk.messagebox.showinfo(
-        title="Message", message=(f"Claim file {df_claim_file} has been selected.")
+        title="Message", message=(f"Claim file {claim_files} has been selected.")
     )
 
 

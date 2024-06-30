@@ -9,10 +9,8 @@ def get_insured_name(df_premium, df_claims):
         df_pivot_insured = df_claims.pivot_table(
             index=["Origin Office", "Follower Office Code"],
             values="Name of insured",
-            aggfunc=lambda x: ", ".join(x),
+            aggfunc=lambda x: ", ".join(x.str.replace(",", "")),
         )
-
-        return df_pivot_insured
 
     elif df_claims.empty:
         df_premium = df_premium.drop_duplicates(
@@ -22,10 +20,9 @@ def get_insured_name(df_premium, df_claims):
         df_pivot_insured = df_premium.pivot_table(
             index=["Origin Office", "Follower Office Code"],
             values="Name of insured",
-            aggfunc=lambda x: ", ".join(x),
+            aggfunc=lambda x: ", ".join(x.str.replace(",", "")),
         )
 
-        return df_pivot_insured
     else:
         df_claims = df_claims.drop_duplicates(
             subset=["Origin Office", "Follower Office Code", "Name of insured"]
@@ -46,10 +43,10 @@ def get_insured_name(df_premium, df_claims):
         df_pivot_insured = df_concat.pivot_table(
             index=["Origin Office", "Follower Office Code"],
             values="Name of insured",
-            aggfunc=lambda x: ", ".join(x),
+            aggfunc=lambda x: ", ".join(x.str.replace(",", "")),
         )
 
-        return df_pivot_insured
+    return df_pivot_insured
 
 
 def generate_pivot_table(excel_filename, company_name, path_string_wip):
@@ -192,4 +189,4 @@ def generate_pivot_table(excel_filename, company_name, path_string_wip):
         format_worksheet.set_column("C:D", 12, format_currency)
         format_worksheet.set_row(-1, 12, format_bold)
         format_worksheet.set_row(0, None, format_header)
-        format_worksheet.autofit()
+        # format_worksheet.autofit()
